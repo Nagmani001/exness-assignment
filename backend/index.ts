@@ -1,4 +1,5 @@
 import express from "express";
+import 'dotenv/config';
 let cookieParser = require('cookie-parser')
 import cors from "cors";
 import { userRouter } from "./router/userRouter";

@@ -1,10 +1,10 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET, RESEND_API_KEY, TRADE_STREAM } from "../config/utils";
+import { JWT_SECRET, TRADE_STREAM } from "../config/utils";
 import { Resend } from "resend";
 import { redisClient, redisStream } from "..";
 
-const resend = new Resend(RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const userRouter = Router();
 
