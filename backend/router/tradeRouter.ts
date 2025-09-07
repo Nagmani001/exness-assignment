@@ -27,7 +27,7 @@ tradeRouter.post("/create", async (req, res) => {
   const message = await redisStream.waitForMessage(id);
 
   res.json({
-    orderId: "message.orderId",
+    orderId: JSON.parse(message.message).orderId,
   });
 });
 

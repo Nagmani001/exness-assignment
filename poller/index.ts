@@ -28,13 +28,13 @@ ws.onopen = () => {
   ws.onmessage = (data: any) => {
     const parsedData = JSON.parse(data.data);
     if (parsedData.data.s == "SOL_USDC") {
-      console.log("solPrice", solPrice);
+      console.log("solPrice", parsedData.data.p);
       solPrice = parseFloat(parsedData.data.p);
     } else if (parsedData.data.s == "BTC_USDC") {
-      console.log("btcPrice", btcPrice);
+      console.log("btcPrice", parsedData.data.p);
       btcPrice = parseFloat(parsedData.data.p);
     } else if (parsedData.data.s == "ETH_USDC") {
-      console.log("ethPrice", ethPrice);
+      console.log("ethPrice", parsedData.data.p);
       ethPrice = parseFloat(parsedData.data.p);
     }
   }
@@ -50,41 +50,20 @@ async function main() {
         "price_updates": [
           {
             "asset": "BTC",
-            "price": Math.round(btcPrice * 10000),
-            "decimal": 4,
+            "price": btcPrice * 100,
+            "decimal": 2,
           }, {
             "asset": "SOL",
-            "price": Math.round(solPrice * 10000),
-            "decimal": 4,
+            "price": solPrice * 100,
+            "decimal": 2,
           }, {
             "asset": "ETH",
-            "price": Math.round(ethPrice * 10000),
-            "decimal": 4,
+            "price": ethPrice * 100,
+            "decimal": 2,
           }
         ]
       })
     });
-
-    /*
-    client.publish("latestPrice", JSON.stringify({
-      "price_updates": [
-        {
-          "asset": "BTC",
-          "price": btcPrice * 10000,
-          "decimal": 4,
-        }, {
-          "asset": "SOL",
-          "price": solPrice * 10000,
-          "decimal": 4,
-        }, {
-          "asset": "ETH",
-          "price": ethPrice * 10000,
-          "decimal": 4,
-        }
-      ]
-    })
-    );
-      */
   }, 100)
 }
 main();

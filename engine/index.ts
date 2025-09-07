@@ -90,17 +90,6 @@ async function main() {
         tradeManager.setCurrentPrice(response.price_updates);
         break;
     }
-
-
-    /*
-    await redisClient.xAdd("upadhyay", "*", {
-      id,
-      message: "done",
-      data,
-    });
-
-    console.log("pushed back to the queue");
-     */
   }
 }
 main();
