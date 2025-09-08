@@ -1,4 +1,5 @@
 import type { OpenOrders, User } from "../types/type";
+import { profitOrLoss } from "./utils";
 
 export class TradeManager {
   users: User[];
@@ -70,24 +71,38 @@ export class TradeManager {
         quantity: parseFloat(userQuantityLeverage),
       });
     }
+    console.log("open orders", this.openOrders);
 
     return orderId;
   }
 
   closeTrade(orderId: string) {
     const order = this.openOrders.find(x => x.id == orderId);
+    if (!order) {
+      return;
+    }
     const currentAssetPrice = this.currentPrice.find((x: any) => x.asset == order?.asset).price;
+    const pnl = profitOrLoss(currentAssetPrice, order);
 
     const trade = {
       ...order,
-      pnl: 23
+      type: pnl.type,
+      value: pnl.value
     };
-
+    return trade;
   }
 
   liquidaateTrade() {
-    setInterval(() => {
+    this.openOrders.forEach(x => {
+      const currentAssetPrice = this.currentPrice.find((x: any) => x.asset == x.asset).price;
+      const pnl = profitOrLoss(currentAssetPrice, x);
+      // if loss is 90 percentage of margin close the trade
 
-    }, 100);
+
+
+
+    });
+
+
   }
 }

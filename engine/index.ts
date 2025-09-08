@@ -84,6 +84,15 @@ async function main() {
         break;
 
       case "close-trade":
+        console.log(response);
+        const trade = tradeManager.closeTrade(response.orderId);
+
+        await redisClient.xAdd(TRADE_STREAM_RESPONSE, "*", {
+          message: JSON.stringify({
+            id: response.id,
+            trade,
+          })
+        });
         break;
 
       case "price-update":

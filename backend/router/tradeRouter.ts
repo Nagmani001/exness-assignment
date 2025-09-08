@@ -43,10 +43,10 @@ tradeRouter.post("/close", async (req, res) => {
     })
   });
 
-  await redisStream.waitForMessage(id);
+  const response = await redisStream.waitForMessage(id);
 
   res.json({
-    msg: "order closed successfully",
+    msg: JSON.parse(response.message),
   });
 
 });
